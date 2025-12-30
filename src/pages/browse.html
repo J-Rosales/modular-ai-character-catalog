@@ -41,12 +41,28 @@
     <section class="page-hero">
       <div class="section-header">
         <h1 class="section-title">Browse the Catalogue</h1>
-        <p class="section-subtitle">Search and filter the full library of characters. Filters arrive in DIRECTIVE_02.</p>
+        <p class="section-subtitle">Search and filter the full library of characters with tri-state tags and sorting controls.</p>
       </div>
-      <div class="input-shell">
-        <label for="searchInput">Search</label>
-        <input id="searchInput" type="text" placeholder="Search by name, tag, or vibe" disabled>
-        <span class="card-badge">Coming soon</span>
+      <div class="filter-panel">
+        <div class="input-shell">
+          <label for="searchInput">Search</label>
+          <input id="searchInput" type="text" placeholder="Search by name, tag, or vibe">
+        </div>
+        <div class="input-shell">
+          <label for="sortSelect">Sort</label>
+          <select id="sortSelect" aria-label="Sort catalogue">
+            <option value="upload_date" selected>Upload date</option>
+            <option value="token_count">Token count</option>
+            <option value="alt_greetings">Alternate greetings</option>
+          </select>
+        </div>
+      </div>
+      <div class="tag-filter-panel">
+        <div class="tag-filter-header">
+          <h2>Filter by tags</h2>
+          <p class="tag-filter-summary" id="filterSummary">No filters applied yet.</p>
+        </div>
+        <div class="tag-filter-list" id="tagFilterList"></div>
       </div>
     </section>
 
@@ -57,7 +73,7 @@
   </main>
 
   <div class="footer-note">
-    Add tags and filters next to power advanced browsing.
+    Tip: click tags to cycle OFF → INCLUDE → EXCLUDE and share the URL to save filters.
   </div>
 
   <script type="module" src="../js/nav.js"></script>
