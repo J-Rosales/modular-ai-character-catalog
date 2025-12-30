@@ -12,15 +12,16 @@ Provide reliable client-side downloads:
 - “Download everything” exists both per character and site-wide.
 - Static site constraints (no server bundling).
 
-## Clarify before implementation
+## Implementation clarifications
 1. Default selections for site-wide download:
-   - default transform mode
-   - default module set
-   - which outputs to include
+   - Use the default/original settings of each character.
+   - Module defaults follow `DIRECTIVE_06`.
+   - Include one JSON and one PNG (with embedded JSON metadata) per character.
 2. Scale:
-   - number of characters expected; large counts may exceed browser memory for full ZIP.
+   - Up to 100 characters; no explicit browser memory constraints.
 3. Naming convention:
-   - directory layout inside the ZIP (by slug; include manifest?)
+   - Organize by slug, alphabetically.
+   - Include a manifest with one line per character and a link (full schema TBD).
 
 ## Tasks
 - Implement `downloadBlob(filename, mime, bytes)` utility.

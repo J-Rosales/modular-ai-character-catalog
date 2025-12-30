@@ -13,15 +13,18 @@ Deliver a modern catalogue grid on landing (featured) and/or a browse page with:
 - Filter semantics: per tag is OFF / INCLUDE / EXCLUDE.
 - Landing shows a featured grid (subset of catalogue).
 
-## Clarify before implementation
+## Implementation clarifications
 1. Scope of tag filtering:
-   - Landing only, or a dedicated “Browse” page as well?
+   - Only on the Browse page.
 2. Text search:
-   - Required at launch or later?
+   - Required at launch.
 3. Tag UI scaling:
-   - How many unique tags are expected (tens vs hundreds)? This affects UI (dropdown vs chip list vs sidebar).
+   - Expect low hundreds of unique tags; implement deduplication.
+   - Use toggleable chips for tag UI.
 4. Sort options:
-   - Any default ordering beyond featured? (alphabetical, updated date, popularity—if none, keep deterministic).
+   - Add a dropdown to sort by token count, alternative greetings, or upload date (descending).
+   - Default ordering is upload date (descending).
+   - Token count and alternative greetings are sourced from the base spec_v2 character JSON.
 
 ## Tasks
 - Implement tag extraction from catalogue entries.

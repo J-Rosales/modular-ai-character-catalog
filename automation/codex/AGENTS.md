@@ -56,14 +56,13 @@ Rationale: schema and policy drive everything; downloads depend on stable genera
 - Keep UI logic in modules (`/src/js/*`), keep content in `/src/data/*`.
 - Accessibility: toggles are keyboard operable; visible focus; labels linked; ARIA where appropriate.
 
-## Clarifications to ask the project owner (before implementation)
-Codex should open an issue or produce a Q&A markdown if any of these are unresolved:
-- Output formats: exact SillyTavern specs and versions (JSON schema details; PNG embedding format).
-- “Download everything” defaults: which transform + which module set + which output files are included by default.
-- Variant composition rules: ordering, mutual exclusions, conditionals (TBD but needs minimal contract).
-- Transform contract: which transforms may alter content vs only presentation; how to represent transforms declaratively.
-- Licensing metadata: minimum required fields and UI wording for “no redistribution” entries.
-- Scale expectations: number of characters; target performance constraints.
+## Implementation clarifications (resolved)
+- Output formats: target SillyTavern `chara_card_v2` JSON; PNG metadata carries the same JSON chunk used for direct SillyTavern import.
+- “Download everything” defaults: site-wide button downloads the default (original settings) of every character in a single ZIP, one JSON + one PNG per character; module defaults follow `DIRECTIVE_06`.
+- Variant composition rules: apply variants in the fixed order defined by `automation/schemas/character_card_spec_v2.md`; fields remain consistent, values vary by variant.
+- Transform contract: transforms are design-time variants (no LLM or dynamic JSON edits at download time); runtime only concatenation/composition/export; declaration is hybrid.
+- Licensing metadata: choose minimum required fields using best-practice guidance; wording for “no redistribution” should follow best practices and indicate source-only linking when redistribution is disallowed.
+- Scale expectations: ~100 characters max (start with ~12); keep performance fast and expose tuning as editable variables.
 
 ## Deliverables Codex should produce early
 - Minimal runnable site shell in `/src/` with:
@@ -72,4 +71,3 @@ Codex should open an issue or produce a Q&A markdown if any of these are unresol
   - tag filter UI skeleton
 - Schema drafts in `/automation/schemas/`
 - Sample data in `/automation/samples/`
-
