@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/output-manifest.schema.json",
+  "title": "Output manifest entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "label", "format"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "format": {
+      "type": "string",
+      "enum": ["json", "text", "png", "zip"]
+    },
+    "transformId": {
+      "type": "string"
+    },
+    "includesModules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "fileNameTemplate": {
+      "type": "string"
+    },
+    "default": {
+      "type": "boolean"
+    }
+  }
+}

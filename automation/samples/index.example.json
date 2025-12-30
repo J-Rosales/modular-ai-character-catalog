@@ -11,10 +11,20 @@
         "lite"
       ],
       "featured": true,
-      "redistributeAllowed": "unknown",
+      "lastUpdated": "2025-01-15",
+      "author": {
+        "name": "Sample Creator",
+        "url": "https://example.com/creator"
+      },
+      "tokenCount": 1280,
+      "redistribution": {
+        "status": "unknown",
+        "notes": "No explicit license found. Default to unknown."
+      },
       "source": {
         "url": "https://example.com/original",
-        "label": "Original source"
+        "label": "Original source",
+        "site": "Example Hub"
       },
       "dataPath": "data/characters/example-bot.json"
     }
