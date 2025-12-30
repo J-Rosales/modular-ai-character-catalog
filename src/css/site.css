@@ -160,6 +160,281 @@ main {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+.character-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.character-left,
+.character-right {
+  display: grid;
+  gap: 20px;
+}
+
+.character-media-card {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.character-media {
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.14), transparent),
+    linear-gradient(135deg, rgba(32, 32, 42, 0.9), rgba(18, 18, 28, 0.9));
+}
+
+.character-media-placeholder {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.95rem;
+  padding: 20px;
+}
+
+.provenance-chip {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  background: rgba(10, 10, 20, 0.8);
+  border-radius: 999px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.85rem;
+}
+
+.chip-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.chip-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 2px;
+}
+
+.chip-status {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.meta-list {
+  display: grid;
+  gap: 12px;
+}
+
+.meta-list div {
+  display: grid;
+  gap: 6px;
+}
+
+.meta-list dt {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.meta-list dd {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.changelog {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.changelog li {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.config-panel {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 18px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: grid;
+  gap: 20px;
+  position: sticky;
+  top: 120px;
+}
+
+.config-section {
+  display: grid;
+  gap: 12px;
+}
+
+.module-controls {
+  display: grid;
+  gap: 14px;
+}
+
+.config-group {
+  display: grid;
+  gap: 10px;
+}
+
+.config-group-title {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.module-item {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 12px 12px;
+}
+
+.module-item summary {
+  list-style: none;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.module-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.module-item summary label {
+  cursor: pointer;
+}
+
+.module-item textarea {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(10, 10, 20, 0.4);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 12px;
+  font-family: inherit;
+}
+
+.tooltip-button {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: inherit;
+  border-radius: 999px;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.option-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.option-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.option-card label {
+  cursor: pointer;
+}
+
+.config-summary {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.config-summary ul {
+  margin: 10px 0 0 18px;
+}
+
+.download-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.secondary-button {
+  background: transparent;
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 12px 18px;
+  cursor: pointer;
+}
+
+.download-note {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 10, 0.7);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-card {
+  background: #131320;
+  border-radius: 18px;
+  padding: 24px;
+  width: min(520px, 90vw);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: grid;
+  gap: 16px;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-close {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: inherit;
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+}
+
 .detail-card {
   background: rgba(255, 255, 255, 0.04);
   border-radius: 16px;
@@ -289,6 +564,14 @@ main {
   .content-page,
   .character-detail {
     padding-top: 120px;
+  }
+
+  .character-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .config-panel {
+    position: static;
   }
 
   .hero-card {
