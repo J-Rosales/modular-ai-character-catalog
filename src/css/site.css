@@ -195,6 +195,84 @@ main {
   border-radius: 10px;
 }
 
+.input-shell select {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: inherit;
+  padding: 10px 14px;
+  border-radius: 10px;
+  min-width: 200px;
+}
+
+.input-shell select option {
+  background: #12121a;
+  color: inherit;
+}
+
+.filter-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.tag-filter-panel {
+  margin-top: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 18px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 16px;
+}
+
+.tag-filter-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tag-filter-summary {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.tag-filter-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag-filter-chip {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-filter-chip:hover,
+.tag-filter-chip:focus-visible {
+  border-color: rgba(255, 51, 102, 0.6);
+  box-shadow: 0 0 0 2px rgba(255, 51, 102, 0.2);
+  outline: none;
+}
+
+.tag-filter-chip.is-include {
+  background: rgba(0, 199, 140, 0.2);
+  border-color: rgba(0, 199, 140, 0.6);
+  color: #bff8e5;
+}
+
+.tag-filter-chip.is-exclude {
+  background: rgba(255, 102, 102, 0.2);
+  border-color: rgba(255, 102, 102, 0.7);
+  color: #ffd0d0;
+  text-decoration: line-through;
+}
+
 .footer-note {
   padding: 40px 8% 60px;
   text-align: center;
