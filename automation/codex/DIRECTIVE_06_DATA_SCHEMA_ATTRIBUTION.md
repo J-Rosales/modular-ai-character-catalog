@@ -14,15 +14,16 @@ Specify the JSON data format for:
 - Each character includes original source link.
 - If redistribution “as-is” is not allowed, do not host a backup (only link).
 
-## Clarify before implementation
+## Implementation clarifications
 1. Minimum metadata required per character:
-   - tags, description, featured, lastUpdated, authorship credit, etc.
+   - tags, description, featured, lastUpdated, author credit, number of tokens.
 2. Attribution display rules:
-   - how to phrase “rewrite/update” vs “fork” vs “inspired by”.
+   - Use phrasing: “rewriten or inspired by {author name} ({source website})”.
 3. Redistribution flag semantics:
-   - `redistributeAllowed: true/false/unknown` and default handling.
+   - Use a best-practice scheme; default to “unknown” when status is unclear.
 4. Versioning:
-   - do we track internal revision versions and changelog entries?
+   - Track internal revisions and changelog entries using best practices.
+   - Do not create a new log entry unless requested by the user.
 
 ## Tasks
 - Draft JSON Schemas:

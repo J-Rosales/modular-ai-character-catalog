@@ -14,15 +14,18 @@ Define the site’s page structure and navigation behavior for a static Neocitie
 - Landing includes static links: About, How to use, License/Attribution, Changelog.
 - Character view exists per entry (either separate HTML pages or SPA route).
 
-## Clarify before implementation
+## Implementation clarifications
 1. Routing choice:
-   - **Option A:** Multi-page (`/character/<slug>.html`) generated manually (simple, no routing JS).
-   - **Option B:** SPA-ish routing (`/#/character/<slug>` or querystring) with a single `character.html` view.
-   Ask: which preference and why? (URL aesthetics vs deployment simplicity vs duplication).
+   - Prefer the simplest-to-remember, simplest-to-navigate approach (human-friendly URLs over aesthetics or duplication concerns).
 2. Template integration:
-   - Which third-party template is chosen, and what are the required visual elements to keep vs discard?
+   - The template has been added wholesale in `template-src`.
+   - On the landing page, ignore everything after the “What Our Customers Say” header (layout retained, content replaced).
 3. Content pages:
-   - Are About/HowTo/License/Changelog separate pages or modal panels?
+   - Separate pages for: Landing (featured cards), Browse (catalog + search), How To, and About.
+   - Browse is the dynamic search page; Landing has no search.
+   - About and How To are static decorated markdown with CSS.
+4. Landing vs browse:
+   - Landing shows only featured cards; full searchable catalog lives on Browse.
 
 ## Tasks
 - Implement primary nav component used on all pages.

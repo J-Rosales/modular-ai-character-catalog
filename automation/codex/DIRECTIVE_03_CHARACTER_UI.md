@@ -13,15 +13,25 @@ Implement the character entry “store-like” view:
 - Each character has model transforms (schema-like vs natural language) and transforms may affect content and/or formatting.
 - Download area replaces “add to cart” (user selects options and downloads).
 
-## Clarify before implementation
+## Implementation clarifications
 1. Minimum module types at launch:
-   - Provide a starter set (e.g., base persona, lore pack, constraints pack, example dialogue pack) even if final rules come later.
+   - Base Persona, First Message, Alternate Greetings, Post History Instructions, and System Prompt.
+   - Post History Instructions and System Prompt are seldom used.
+   - Each element maps to a spec_v2 field for the character.
 2. Toggle grouping behavior:
-   - Need both multi-select and one-of groups? (e.g., radio groups for mutually exclusive variants).
+   - Support both multi-select and single-select; all options within the same category are mutually exclusive.
 3. Preview pane:
-   - Should it show the assembled output live? If yes, which output type is previewed by default?
+   - Each JSON text field snippet has a preview in an uneditable text box within a foldout element.
+   - The foldout contains the toggle for its selection.
 4. Source + attribution display:
-   - Exact wording/placement and whether to display redistribution status.
+   - Short-form indicator stub at the bottom left of the card.
+   - Clicking opens a modal with more information.
+   - Redistribution status is shown in the same modal.
+5. Layout and affordances:
+   - Header retains navigation links.
+   - Two-column layout: left shows a larger image preserving aspect ratio; right contains foldable controls.
+   - Toggles live in foldout sections with uneditable previews; include small “?” tooltip buttons for explanations.
+   - Download options sit at the bottom of the right column.
 
 ## Tasks
 - Build the layout skeleton and responsive behavior.

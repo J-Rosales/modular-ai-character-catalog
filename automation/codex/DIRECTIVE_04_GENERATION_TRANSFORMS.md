@@ -14,16 +14,16 @@ Define and implement the generation pipeline:
 - Transforms can affect both content and formatting (“both” confirmed).
 - Variant composition rules will be designed later, but pipeline should be extensible.
 
-## Clarify before implementation
+## Implementation clarifications
 1. Canonical representation:
-   - What fields are mandatory for a character (name, persona, scenario, example dialogue, etc.)?
+   - Mandatory fields are those specified by `automation/schemas/character_card_spec_v2.md`.
 2. Transform contract:
-   - Which transforms are “presentation only” vs “content altering”?
-   - Should transforms be template-based (string templates) or rule-based (field mapping + renderers)?
+   - Transforms are concatenation of statically uploaded elements; toggles select which elements to concatenate and where to inject.
 3. Text pack targets:
-   - What are the exact pack shapes? (single combined prompt vs multi-file per role).
+   - Produce a single JSON in spec_v2 format with fields swapped/concatenated per user choices.
 4. PNG:
-   - If supported later, confirm exact embedding method and metadata format used by SillyTavern.
+   - PNGs are static uploads; metadata contains the same JSON chunk used for SillyTavern imports.
+   - Users can right-click save to preserve embedded metadata.
 
 ## Tasks
 - Define an intermediate “CompiledCharacter” object.
