@@ -20,7 +20,7 @@ main {
 
 .character-grid {
     display: grid;
-    gap: var(--space-6);
+    gap: var(--card-gap);
     grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
     justify-content: center;
     justify-items: center;
@@ -76,6 +76,7 @@ main {
     border-radius: 0;
     overflow: hidden;
     background: var(--color-surface-2);
+    margin-inline: calc(var(--card-padding) * -1);
 }
 
 .character-card .card-image-row img {

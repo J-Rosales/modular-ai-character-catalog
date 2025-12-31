@@ -103,6 +103,21 @@ nav.scrolled {
 	margin: 0 auto;
 }
 
+@media (min-width: 901px) {
+	.nav-container {
+		position: relative;
+	}
+
+	.nav-links {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		margin: 0;
+		width: max-content;
+	}
+}
+
 .nav-links a {
 	color: var(--text-light);
 	text-decoration: none;
