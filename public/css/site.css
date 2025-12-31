@@ -21,8 +21,8 @@ main {
 .character-grid {
     display: grid;
     gap: var(--card-gap);
-    grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
-    justify-content: center;
+    grid-template-columns: repeat(auto-fill, var(--card-width));
+    justify-content: start;
     justify-items: center;
     margin-top: var(--space-6);
 }
