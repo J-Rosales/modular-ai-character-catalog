@@ -99,6 +99,8 @@ nav.scrolled {
 	gap: 30px;
 	list-style: none;
 	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
 }
 
 .nav-links a {
@@ -818,7 +820,7 @@ nav.scrolled {
 
 /* Collections Grid */
 .collections {
-	padding: 120px 50px 100px;
+	padding: 24px 50px 80px;
 	max-width: 1400px;
 	margin: 0 auto;
 	position: relative;

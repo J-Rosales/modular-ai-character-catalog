@@ -1,5 +1,7 @@
 :root {
   color-scheme: dark;
+  --card-width: 220px;
+  --card-grid-gap: 24px;
 }
 
 body {
@@ -59,8 +61,10 @@ main {
 
 .character-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
+  gap: var(--card-grid-gap);
+  justify-content: center;
+  justify-items: center;
   margin-top: 32px;
 }
 
@@ -69,6 +73,9 @@ main {
   border-radius: 18px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  max-width: var(--card-width);
+  justify-self: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
