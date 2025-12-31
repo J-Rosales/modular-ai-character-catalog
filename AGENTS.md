@@ -99,3 +99,9 @@ Before performing any task, **explicitly classify the request** as one of:
 - Treat this instruction as part of `AGENTS.md`.
 - Reject or flag changes that cross task boundaries.
 - Keep diffs minimal and scoped to the allowed surfaces.
+
+## Design Tokens
+See `public/css/DESIGN_TOKENS.md` for the token system and usage rules.
+
+- For **VISUAL TASK** work, prefer edits in `public/css/design-tokens.css`.
+- Do not introduce new styling systems (Bootstrap/Tailwind/Sass) without explicit user approval.
