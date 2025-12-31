@@ -61,9 +61,9 @@ main {
 
 .character-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
+  grid-template-columns: repeat(auto-fill, var(--card-width));
   gap: var(--card-grid-gap);
-  justify-content: center;
+  justify-content: start;
   justify-items: center;
   margin-top: 32px;
 }
