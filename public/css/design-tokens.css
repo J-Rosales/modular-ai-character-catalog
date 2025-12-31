@@ -1,0 +1,27 @@
+:root {
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-7: 32px;
+    --space-8: 40px;
+    --space-9: 60px;
+    --space-10: 80px;
+
+    --font-xs: 0.85rem;
+    --font-sm: 0.95rem;
+    --font-md: 1rem;
+    --font-lg: 1.1rem;
+    --font-xl: 1.25rem;
+
+    --radius-sm: 12px;
+    --radius-md: 20px;
+    --radius-lg: 24px;
+    --radius-xl: 28px;
+    --radius-pill: 999px;
+
+    --card-width: 220px;
+    --card-padding: 32px;
+}
