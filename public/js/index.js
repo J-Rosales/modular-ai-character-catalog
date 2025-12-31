@@ -3,13 +3,6 @@ const featuredStatus = document.getElementById('featured-status');
 
 let hasLoggedCardBuilder = false;
 
-const renderList = (container, entries, buildCharacterCard) => {
-    container.innerHTML = '';
-    entries.forEach(entry => {
-        container.append(buildCharacterCard(entry));
-    });
-};
-
 const loadIndex = async () => {
     try {
         const response = await fetch('data/index.json');
@@ -34,7 +27,10 @@ const loadIndex = async () => {
             console.debug('[catalogue] buildCharacterCard active for featured cards');
             hasLoggedCardBuilder = true;
         }
-        renderList(featuredContainer, featuredEntries, buildCharacterCard);
+        featuredContainer.innerHTML = '';
+        featuredEntries.forEach(entry => {
+            featuredContainer.append(buildCharacterCard(entry));
+        });
     } catch (error) {
         const message = 'Unable to load catalogue data. Please check the data folder.';
         if (featuredStatus) {
