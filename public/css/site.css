@@ -194,16 +194,15 @@ main {
     width: var(--card-icon-hit-area);
     height: var(--card-icon-hit-area);
     border-radius: var(--radius-pill);
-    border: var(--border-width) solid var(--color-border);
+    border: none;
     background: color-mix(in srgb, var(--color-text-primary) 6%, transparent);
     color: var(--color-text-secondary);
-    transition: border 0.2s ease, background 0.2s ease, color 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease;
     cursor: pointer;
 }
 
 .character-card .icon-button:hover {
     color: var(--color-text-primary);
-    border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
     background: color-mix(in srgb, var(--color-accent) 18%, transparent);
 }
 

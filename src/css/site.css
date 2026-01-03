@@ -238,6 +238,11 @@ main {
 .character-card .icon-button {
   width: var(--card-icon-hit-area);
   height: var(--card-icon-hit-area);
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
 }
 
 .page-hero {
