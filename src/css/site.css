@@ -86,10 +86,9 @@ nav.scrolled {
 .nav-links {
   display: flex;
   justify-content: center;
+  margin: 0 auto;
   flex-wrap: nowrap;
   width: max-content;
-  margin: 0;
-  justify-self: center;
 }
 
 .nav-theme {
