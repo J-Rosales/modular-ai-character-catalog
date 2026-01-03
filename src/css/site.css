@@ -15,8 +15,6 @@ main {
 
 nav,
 nav.scrolled {
-  display: flex;
-  justify-content: center;
   padding-left: 0;
   padding-right: 0;
 }
@@ -40,10 +38,9 @@ nav.scrolled {
 .nav-container {
   display: grid;
   grid-template-rows: auto auto;
-  justify-items: center;
   align-items: center;
   gap: 12px;
-  width: 100%;
+  width: min(100%, 1400px);
   max-width: 1400px;
   padding: 0 clamp(24px, 4vw, 50px);
   margin: 0 auto;
