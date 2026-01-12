@@ -36,11 +36,8 @@ export function getCharacterRoot(slug) {
   return `${base}data/characters/${normalizedSlug}/`;
 }
 
-export function getCharacterPngPath(slug, variantSlug = null) {
+export function getCharacterPngPath(slug) {
   const root = getCharacterRoot(slug);
-  if (variantSlug) {
-    return `${root}variants/${variantSlug}/${DEFAULT_AVATAR_FILENAME}`;
-  }
   return `${root}${DEFAULT_AVATAR_FILENAME}`;
 }
 
