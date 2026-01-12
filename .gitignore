@@ -1,2 +1,4 @@
 /public/images/*.avif
 .secrets
+.bundle/
+vendor/bundle/
