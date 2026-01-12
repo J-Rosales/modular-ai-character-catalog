@@ -334,6 +334,9 @@ export function buildCharacterCard(entry) {
 
   card.style.setProperty('--card-background-image', `url("${safeImageUrl}")`);
 
+  const gradient = document.createElement('div');
+  gradient.className = 'card-background-gradient';
+
   const content = document.createElement('div');
   content.className = 'card-content';
 
@@ -464,6 +467,7 @@ export function buildCharacterCard(entry) {
   }
 
   content.appendChild(footerRow);
+  card.appendChild(gradient);
   card.appendChild(content);
   registerChipRow(tagRow, tags);
 
