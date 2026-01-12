@@ -11,12 +11,22 @@ It only validates and mirrors `src/` into `public/` for deployment.
 ## Local commands (run from the parent folder)
 ### 1) Sync generator output into src/data
 ```bash
+./botparts-site/automation/pipelines/sync-data.sh
+```
+
+Underlying command (reference):
+```bash
 rsync -a --delete \
   botparts-generator/output/ \
   botparts-site/src/data/
 ```
 
 ### 2) Validate + mirror src → public
+```bash
+./botparts-site/automation/pipelines/build.sh
+```
+
+Underlying commands (reference):
 ```bash
 cd botparts-site
 

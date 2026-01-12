@@ -6,6 +6,11 @@ No transforms or builds are performed during release.
 
 ## Local commands (run from the parent folder)
 ```bash
+./botparts-site/automation/pipelines/release.sh
+```
+
+Underlying commands (reference):
+```bash
 cd botparts-site
 
 # Optional sanity checks before deployment
