@@ -195,6 +195,7 @@ main {
   border-radius: 4px;
   overflow: hidden;
   border: 1px solid var(--border);
+  position: relative;
   --card-content-padding: 20px;
   --card-content-gap: 12px;
   --card-image-height: 220px;
@@ -230,19 +231,28 @@ main {
   box-shadow: 0 18px 30px rgba(0, 0, 0, 0.4);
 }
 
-.character-card .card-content {
+.character-card .card-background-gradient {
+  position: absolute;
+  inset: 0;
   background: linear-gradient(
     to bottom,
     transparent 0,
-    transparent var(--card-image-height),
-    var(--panel-2) var(--card-image-height),
-    var(--panel-2) 100%
+    color-mix(in srgb, var(--panel-2) 70%, transparent) 100%
   );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.character-card .card-content {
+  background: none;
+  color: inherit;
   padding: var(--card-content-padding);
   display: grid;
   gap: var(--card-content-gap);
   justify-items: center;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 .character-card .card-title {
@@ -283,15 +293,15 @@ main {
 
 .character-card .tag-pill {
   font-size: 0.75rem;
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: none;
+  color: inherit;
   padding: 4px 10px;
   border-radius: 999px;
 }
 
 .character-card .tag-overflow {
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: inherit;
   border: 1px dashed var(--border);
   padding: 4px 10px;
   border-radius: 999px;
@@ -314,7 +324,7 @@ main {
   border: 1px solid var(--border);
   border-radius: 999px;
   background: transparent;
-  color: var(--accent);
+  color: inherit;
   padding: 4px 12px;
   font-size: 0.75rem;
   cursor: pointer;
@@ -327,7 +337,7 @@ main {
 }
 
 .character-card .spoiler-toggle:hover {
-  color: var(--accent-hover);
+  color: inherit;
 }
 
 .character-card .card-footer {
@@ -341,7 +351,7 @@ main {
 .character-card .card-upload-date {
   align-self: center;
   font-size: calc(var(--font-xs) - 0.1rem);
-  color: var(--text-muted);
+  color: inherit;
   line-height: 1.2;
 }
 
