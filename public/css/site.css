@@ -204,7 +204,8 @@ main {
   justify-self: center;
   display: flex;
   flex-direction: column;
-  min-height: var(--card-image-height);
+  aspect-ratio: 3 / 4;
+  min-height: clamp(240px, 35vw, 360px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
