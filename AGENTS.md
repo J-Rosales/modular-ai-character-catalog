@@ -33,7 +33,7 @@ All behavior is **static and deterministic**.
 ## Data contract
 - Data lives under `src/data/`
 - Structure mirrors generator output exactly.
-- `src/data/` is treated as **read-only**.
+- `src/data/` is treated as **read-only**, unless the prompt explicitly contains the words "You have explicit permission".
 - Changes to data come only from copying generator output.
 
 ## Directive mapping (historical → current)
