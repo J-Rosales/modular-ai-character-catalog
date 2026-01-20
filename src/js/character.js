@@ -19,12 +19,12 @@ const provenanceDetails = document.getElementById('provenanceDetails');
 const characterMedia = document.getElementById('characterMedia');
 const characterMediaPlaceholder = document.getElementById('characterMediaPlaceholder');
 const metaEl = document.getElementById('characterMeta');
-  const changelogEl = document.getElementById('characterChangelog');
-  const changelogCard = document.getElementById('characterChangelogCard');
-  const variantControls = document.getElementById('variantControls');
-  const proseControls = document.getElementById('proseControls');
-  const outputControls = document.getElementById('outputControls');
-  const configSummary = document.getElementById('configSummary');
+const changelogEl = document.getElementById('characterChangelog');
+const changelogCard = document.getElementById('characterChangelogCard');
+const variantControls = document.getElementById('variantControls');
+const proseControls = document.getElementById('proseControls');
+const outputControls = document.getElementById('outputControls');
+const configSummary = document.getElementById('configSummary');
 const downloadPrimaryButton = document.getElementById('downloadPrimary');
 const downloadAllButton = document.getElementById('downloadAll');
 
@@ -60,10 +60,10 @@ function resolveAssetUrl(path) {
   return `${base}${normalized}`;
 }
 
-  function resolveCharacterImage(slug, variantSlug) {
-    if (!slug) return null;
-    return resolveAssetUrl(getCharacterPngPath(slug, variantSlug));
-  }
+function resolveCharacterImage(slug, variantSlug) {
+  if (!slug) return null;
+  return resolveAssetUrl(getCharacterPngPath(slug, variantSlug));
+}
 
 function resolveSourceSite(url) {
   if (!url) return 'unknown source';
@@ -89,7 +89,7 @@ function buildAttributionSentence(data) {
   return `rewriten or inspired by ${author} (${sourceSite})`;
 }
 
-function buildOptionCard({ id, label, name, checked }) {
+function buildOptionCard({ id, label, description, name, checked }) {
   const wrapper = document.createElement('div');
   wrapper.className = 'option-card';
   const input = document.createElement('input');
@@ -99,26 +99,32 @@ function buildOptionCard({ id, label, name, checked }) {
   input.checked = checked;
   const labelEl = document.createElement('label');
   labelEl.htmlFor = id;
-  labelEl.textContent = label;
+  const titleEl = document.createElement('span');
+  titleEl.className = 'option-title';
+  titleEl.textContent = label;
+  const descriptionEl = document.createElement('span');
+  descriptionEl.className = 'option-description';
+  descriptionEl.textContent = description;
+  labelEl.append(titleEl, descriptionEl);
   wrapper.appendChild(input);
   wrapper.appendChild(labelEl);
   return { wrapper, input };
 }
 
-  function updateUrl(state) {
-    const params = new URLSearchParams(window.location.search);
-    if (state.proseVariant) {
-      params.set('prose', state.proseVariant);
-    } else {
-      params.delete('prose');
-    }
-    if (state.variantSlug) {
-      params.set('variant', state.variantSlug);
-    } else {
-      params.delete('variant');
-    }
-    if (state.output) {
-      params.set('output', state.output);
+function updateUrl(state) {
+  const params = new URLSearchParams(window.location.search);
+  if (state.proseVariant) {
+    params.set('prose', state.proseVariant);
+  } else {
+    params.delete('prose');
+  }
+  if (state.variantSlug) {
+    params.set('variant', state.variantSlug);
+  } else {
+    params.delete('variant');
+  }
+  if (state.output) {
+    params.set('output', state.output);
   } else {
     params.delete('output');
   }
@@ -126,19 +132,19 @@ function buildOptionCard({ id, label, name, checked }) {
   window.history.replaceState({}, '', newUrl);
 }
 
-  function renderSummary(state, variants, variantOptions) {
-    if (!configSummary) return;
-    const variant = variants.find((item) => item.id === state.proseVariant);
-    const characterVariant = variantOptions.find((item) => item.id === state.variantSlug);
-    const output = outputOptions.find((item) => item.id === state.output);
+function renderSummary(state, variants, variantOptions) {
+  if (!configSummary) return;
+  const variant = variants.find((item) => item.id === state.proseVariant);
+  const characterVariant = variantOptions.find((item) => item.id === state.variantSlug);
+  const output = outputOptions.find((item) => item.id === state.output);
 
-    configSummary.innerHTML = `
-      <h3>Current configuration</h3>
-      <p><strong>Prose variant:</strong> ${variant ? variant.label : 'None selected'}</p>
-      <p><strong>Character variant:</strong> ${characterVariant ? characterVariant.label : 'Canon (root)'}</p>
-      <p><strong>Output:</strong> ${output ? output.label : 'None selected'}</p>
-    `;
-  }
+  configSummary.innerHTML = `
+    <h3>Current configuration</h3>
+    <p><strong>Prose variant:</strong> ${variant ? variant.label : 'None selected'}</p>
+    <p><strong>Character variant:</strong> ${characterVariant ? characterVariant.label : 'Canon (root)'}</p>
+    <p><strong>Output:</strong> ${output ? output.label : 'None selected'}</p>
+  `;
+}
 
 async function runDownload(button, action) {
   if (!button) return;
@@ -200,35 +206,69 @@ function setupModal() {
   });
 }
 
-  function formatVariantLabel(variant) {
-    if (variant === 'schema-like') {
-      return 'Schema-like prose';
-    }
+function formatTitleCase(value) {
+  if (!value) return '';
+  return value
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
+function formatVariantLabel(variant) {
+  if (variant === 'schema-like') {
+    return 'Schema-like prose';
+  }
   if (variant === 'hybrid') {
     return 'Hybrid prose';
   }
-    return variant;
-  }
+  return formatTitleCase(variant);
+}
 
-  function updateCharacterImage(slug, variantSlug, name) {
-    if (!characterMedia) return;
-    const imageUrl = resolveCharacterImage(slug, variantSlug);
-    if (imageUrl) {
-      const img = document.createElement('img');
-      img.src = withDevCacheBust(imageUrl);
-      img.alt = name ? `${name} preview` : 'Character preview';
-      img.loading = 'lazy';
-      characterMedia.innerHTML = '';
-      characterMedia.appendChild(img);
-      characterMediaPlaceholder?.classList.add('hidden');
-    } else {
-      characterMediaPlaceholder?.classList.remove('hidden');
-    }
+function getProseVariantDescription(variant) {
+  if (variant === 'schema-like') {
+    return 'Lean schema-focused prose output.';
   }
+  if (variant === 'hybrid') {
+    return 'Expanded prose with schema detail.';
+  }
+  return 'Alternate prose rendering style.';
+}
 
-  async function loadCharacter() {
-    const params = new URLSearchParams(window.location.search);
-    const slug = params.get('slug');
+function getCharacterVariantDescription(variantSlug) {
+  if (!variantSlug) {
+    return 'Default canon presentation.';
+  }
+  return `Alternate ${formatTitleCase(variantSlug)} character rendering.`;
+}
+
+function getOutputDescription(outputId) {
+  if (outputId === 'json') {
+    return 'Download the JSON spec file.';
+  }
+  if (outputId === 'png') {
+    return 'Download the PNG card with embedded metadata.';
+  }
+  return 'Choose a download format.';
+}
+
+function updateCharacterImage(slug, variantSlug, name) {
+  if (!characterMedia) return;
+  const imageUrl = resolveCharacterImage(slug, variantSlug);
+  if (imageUrl) {
+    const img = document.createElement('img');
+    img.src = withDevCacheBust(imageUrl);
+    img.alt = name ? `${name} preview` : 'Character preview';
+    img.loading = 'lazy';
+    characterMedia.innerHTML = '';
+    characterMedia.appendChild(img);
+    characterMediaPlaceholder?.classList.add('hidden');
+  } else {
+    characterMediaPlaceholder?.classList.remove('hidden');
+  }
+}
+
+async function loadCharacter() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
 
   if (!slug) {
     setError('No character selected. Return to the catalogue to choose a profile.');
@@ -239,44 +279,47 @@ function setupModal() {
     const manifest = await fetchCharacterManifest(slug);
     const site = manifest?.site || manifest?.catalogue || manifest?.catalog || manifest?.x?.site || {};
     const name = site.name || manifest?.name || slug;
-      const description = site.description || manifest?.description || 'Description coming soon.';
-      const tags = site.tags || manifest?.tags || [];
-      const proseVariants = getProseVariants(manifest);
-      const variantSlugs = manifest?.x?.variantSlugs || manifest?.variantSlugs || [];
-      const variants = proseVariants.map((variant) => ({
-        id: variant,
-        label: formatVariantLabel(variant)
-      }));
-      const requestedVariantSlug = params.get('variant');
-      const requestedProseVariant = params.get('prose');
-      const resolvedVariantSlug = variantSlugs.includes(requestedVariantSlug)
-        ? requestedVariantSlug
-        : null;
-      const resolvedProseVariant = variants.find((variant) => variant.id === requestedProseVariant)?.id
-        || (!resolvedVariantSlug
-          ? variants.find((variant) => variant.id === requestedVariantSlug)?.id
-          : null)
-        || variants[0]?.id
-        || null;
-      const state = {
-        proseVariant: resolvedProseVariant,
-        variantSlug: resolvedVariantSlug,
-        output: params.get('output') || outputOptions[0].id
-      };
-      const variantOptions = [
-        { id: null, label: 'Canon (root)' },
-        ...variantSlugs.map((variantSlug) => ({ id: variantSlug, label: variantSlug }))
-      ];
+    const description = site.description || manifest?.description || 'Description coming soon.';
+    const tags = site.tags || manifest?.tags || [];
+    const proseVariants = getProseVariants(manifest);
+    const variantSlugs = manifest?.x?.variantSlugs || manifest?.variantSlugs || [];
+    const variants = proseVariants.map((variant) => ({
+      id: variant,
+      label: formatVariantLabel(variant)
+    }));
+    const requestedVariantSlug = params.get('variant');
+    const requestedProseVariant = params.get('prose');
+    const resolvedVariantSlug = variantSlugs.includes(requestedVariantSlug)
+      ? requestedVariantSlug
+      : null;
+    const resolvedProseVariant = variants.find((variant) => variant.id === requestedProseVariant)?.id
+      || (!resolvedVariantSlug
+        ? variants.find((variant) => variant.id === requestedVariantSlug)?.id
+        : null)
+      || variants[0]?.id
+      || null;
+    const state = {
+      proseVariant: resolvedProseVariant,
+      variantSlug: resolvedVariantSlug,
+      output: params.get('output') || outputOptions[0].id
+    };
+    const variantOptions = [
+      { id: null, label: 'Canon (root)' },
+      ...variantSlugs.map((variantSlug) => ({
+        id: variantSlug,
+        label: formatTitleCase(variantSlug)
+      }))
+    ];
 
-      document.title = `${name} | Botparts Catalogue`;
-      if (nameEl) nameEl.textContent = name;
-      if (descriptionEl) descriptionEl.textContent = description;
+    document.title = `${name} | Bot Catalogue`;
+    if (nameEl) nameEl.textContent = name;
+    if (descriptionEl) descriptionEl.textContent = description;
 
     if (tagsEl) {
       tagsEl.innerHTML = '';
       tags.forEach((tag) => {
         const span = document.createElement('span');
-        span.className = 'tag-pill';
+        span.className = 'tag-filter-chip';
         span.textContent = tag;
         tagsEl.appendChild(span);
       });
@@ -307,7 +350,7 @@ function setupModal() {
       buildMetaRow('Primary source', sourceLabel);
     }
 
-      updateCharacterImage(slug, state.variantSlug, name);
+    updateCharacterImage(slug, state.variantSlug, name);
 
     if (changelogEl && changelogCard) {
       const history = manifest.versions || site.versions || [];
@@ -323,77 +366,80 @@ function setupModal() {
       }
     }
 
-      if (variantControls) {
-        variantControls.innerHTML = '';
-        variantOptions.forEach((variant) => {
-          const { wrapper, input } = buildOptionCard({
-            id: `character-variant-${variant.id || 'canon'}`,
-            label: variant.label,
-            name: 'character-variant',
-            checked: state.variantSlug === variant.id
-          });
-          input.addEventListener('change', () => {
-            state.variantSlug = variant.id;
-            updateCharacterImage(slug, state.variantSlug, name);
-            renderSummary(state, variants, variantOptions);
-            updateUrl(state);
-          });
-          variantControls.appendChild(wrapper);
+    if (variantControls) {
+      variantControls.innerHTML = '';
+      variantOptions.forEach((variant) => {
+        const { wrapper, input } = buildOptionCard({
+          id: `character-variant-${variant.id || 'canon'}`,
+          label: variant.label,
+          description: getCharacterVariantDescription(variant.id),
+          name: 'character-variant',
+          checked: state.variantSlug === variant.id
         });
-      }
-
-      if (proseControls) {
-        proseControls.innerHTML = '';
-        variants.forEach((variant) => {
-          const { wrapper, input } = buildOptionCard({
-            id: `variant-${variant.id}`,
-            label: variant.label,
-            name: 'prose-variant',
-            checked: state.proseVariant === variant.id
-          });
-          input.addEventListener('change', () => {
-            state.proseVariant = variant.id;
-            renderSummary(state, variants, variantOptions);
-            updateUrl(state);
-          });
-          proseControls.appendChild(wrapper);
+        input.addEventListener('change', () => {
+          state.variantSlug = variant.id;
+          updateCharacterImage(slug, state.variantSlug, name);
+          renderSummary(state, variants, variantOptions);
+          updateUrl(state);
         });
+        variantControls.appendChild(wrapper);
+      });
     }
 
-      if (outputControls) {
-        outputControls.innerHTML = '';
-        outputOptions.forEach((output) => {
+    if (proseControls) {
+      proseControls.innerHTML = '';
+      variants.forEach((variant) => {
+        const { wrapper, input } = buildOptionCard({
+          id: `variant-${variant.id}`,
+          label: variant.label,
+          description: getProseVariantDescription(variant.id),
+          name: 'prose-variant',
+          checked: state.proseVariant === variant.id
+        });
+        input.addEventListener('change', () => {
+          state.proseVariant = variant.id;
+          renderSummary(state, variants, variantOptions);
+          updateUrl(state);
+        });
+        proseControls.appendChild(wrapper);
+      });
+    }
+
+    if (outputControls) {
+      outputControls.innerHTML = '';
+      outputOptions.forEach((output) => {
         const { wrapper, input } = buildOptionCard({
           id: `output-${output.id}`,
           label: output.label,
+          description: getOutputDescription(output.id),
           name: 'output-type',
           checked: state.output === output.id
-          });
-          input.addEventListener('change', () => {
-            state.output = output.id;
-            renderSummary(state, variants, variantOptions);
-            updateUrl(state);
-          });
-          outputControls.appendChild(wrapper);
         });
-      }
+        input.addEventListener('change', () => {
+          state.output = output.id;
+          renderSummary(state, variants, variantOptions);
+          updateUrl(state);
+        });
+        outputControls.appendChild(wrapper);
+      });
+    }
 
-      renderSummary(state, variants, variantOptions);
-      updateUrl(state);
+    renderSummary(state, variants, variantOptions);
+    updateUrl(state);
 
     if (downloadPrimaryButton) {
-        downloadPrimaryButton.addEventListener('click', () => {
-          runDownload(downloadPrimaryButton, () =>
-            downloadSelection({
-              slug,
-              manifest,
-              proseVariant: state.proseVariant,
-              outputType: state.output,
-              variantSlug: state.variantSlug
-            })
-          );
-        });
-      }
+      downloadPrimaryButton.addEventListener('click', () => {
+        runDownload(downloadPrimaryButton, () =>
+          downloadSelection({
+            slug,
+            manifest,
+            proseVariant: state.proseVariant,
+            outputType: state.output,
+            variantSlug: state.variantSlug
+          })
+        );
+      });
+    }
 
     if (downloadAllButton) {
       downloadAllButton.addEventListener('click', () => {
