@@ -1,6 +1,7 @@
 import { downloadCharacterBundle, downloadSelection } from './downloads.js';
 import {
   fetchCharacterManifest,
+  fetchCharacterSpec,
   getBasePath,
   getCharacterPngPath,
   getProseVariants,
@@ -27,11 +28,76 @@ const outputControls = document.getElementById('outputControls');
 const configSummary = document.getElementById('configSummary');
 const downloadPrimaryButton = document.getElementById('downloadPrimary');
 const downloadAllButton = document.getElementById('downloadAll');
+const specCreatorNotes = document.getElementById('specCreatorNotes');
+const specDescription = document.getElementById('specDescription');
+const specFirstMes = document.getElementById('specFirstMes');
+const specPersonality = document.getElementById('specPersonality');
+const specScenario = document.getElementById('specScenario');
+const specSystemPrompt = document.getElementById('specSystemPrompt');
+const specPostHistoryInstructions = document.getElementById('specPostHistoryInstructions');
 
 const outputOptions = [
   { id: 'json', label: 'Spec v2 JSON' },
   { id: 'png', label: 'PNG card' }
 ];
+
+const specFieldMap = {
+  creator_notes: specCreatorNotes,
+  description: specDescription,
+  first_mes: specFirstMes,
+  personality: specPersonality,
+  scenario: specScenario,
+  system_prompt: specSystemPrompt,
+  post_history_instructions: specPostHistoryInstructions
+};
+const specCache = new Map();
+
+function hasSpecFields() {
+  return Object.values(specFieldMap).some(Boolean);
+}
+
+function formatSpecValue(value) {
+  if (value == null) return '';
+  if (typeof value === 'string') return value;
+  return JSON.stringify(value, null, 2);
+}
+
+function setSpecFieldValues(spec, fallback = '') {
+  Object.entries(specFieldMap).forEach(([key, fieldEl]) => {
+    if (!fieldEl) return;
+    if (!spec) {
+      fieldEl.value = fallback;
+      return;
+    }
+    fieldEl.value = formatSpecValue(spec[key]);
+  });
+}
+
+function getSpecCacheKey(proseVariant, variantSlug) {
+  return `${proseVariant || ''}::${variantSlug || 'canon'}`;
+}
+
+async function preloadSpecs(slug, proseVariants, variantSlugs) {
+  if (!hasSpecFields()) return;
+  const variants = [null, ...variantSlugs];
+  const tasks = [];
+  proseVariants.forEach((proseVariant) => {
+    variants.forEach((variantSlug) => {
+      const cacheKey = getSpecCacheKey(proseVariant, variantSlug);
+      if (specCache.has(cacheKey)) return;
+      tasks.push(
+        fetchCharacterSpec(slug, proseVariant, variantSlug)
+          .then((spec) => {
+            specCache.set(cacheKey, spec);
+          })
+          .catch(() => {
+            specCache.set(cacheKey, null);
+          })
+      );
+    });
+  });
+  await Promise.all(tasks);
+}
 
 function setError(message) {
   if (errorEl) {
@@ -144,6 +210,28 @@ function renderSummary(state, variants, variantOptions) {
     <p><strong>Character variant:</strong> ${characterVariant ? characterVariant.label : 'Canon (root)'}</p>
     <p><strong>Output:</strong> ${output ? output.label : 'None selected'}</p>
   `;
+}
+
+async function updateSpecFields(slug, proseVariant, variantSlug) {
+  if (!hasSpecFields()) return;
+  const cacheKey = getSpecCacheKey(proseVariant, variantSlug);
+  if (specCache.has(cacheKey)) {
+    const spec = specCache.get(cacheKey);
+    if (spec) {
+      setSpecFieldValues(spec);
+    } else {
+      setSpecFieldValues(null, 'Not available.');
+    }
+    return;
+  }
+  try {
+    const spec = await fetchCharacterSpec(slug, proseVariant, variantSlug);
+    specCache.set(cacheKey, spec);
+    setSpecFieldValues(spec);
+  } catch (error) {
+    specCache.set(cacheKey, null);
+    setSpecFieldValues(null, 'Not available.');
+  }
 }
 
 async function runDownload(button, action) {
@@ -381,6 +469,7 @@ async function loadCharacter() {
           updateCharacterImage(slug, state.variantSlug, name);
           renderSummary(state, variants, variantOptions);
           updateUrl(state);
+          updateSpecFields(slug, state.proseVariant, state.variantSlug);
         });
         variantControls.appendChild(wrapper);
       });
@@ -400,6 +489,7 @@ async function loadCharacter() {
           state.proseVariant = variant.id;
           renderSummary(state, variants, variantOptions);
           updateUrl(state);
+          updateSpecFields(slug, state.proseVariant, state.variantSlug);
         });
         proseControls.appendChild(wrapper);
       });
@@ -426,6 +516,8 @@ async function loadCharacter() {
 
     renderSummary(state, variants, variantOptions);
     updateUrl(state);
+    await preloadSpecs(slug, proseVariants, variantSlugs);
+    await updateSpecFields(slug, state.proseVariant, state.variantSlug);
 
     if (downloadPrimaryButton) {
       downloadPrimaryButton.addEventListener('click', () => {
